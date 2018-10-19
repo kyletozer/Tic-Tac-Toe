@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 
-class App extends Component {
+export default class Square extends Component {
+  
   render() {
     return (
-      <div className="square">
-        []
-      </div>
+      <div className="square"></div>
     );
   }
 }
-
-export default App;
