@@ -4,7 +4,9 @@ export default class Square extends Component {
   
   render() {
     return (
-      <div className="square"></div>
+      <div onClick={this.props.placeMarker} className="square">
+        
+      </div>
     );
   }
 }
