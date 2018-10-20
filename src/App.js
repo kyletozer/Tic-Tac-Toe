@@ -24,15 +24,20 @@ export default class App extends Component {
   
   render() {
     const board = []
+    const style = { display: 'block' }
 
     for(let i = 0; i < 9; i++) {
       board.push(<Square key={i}></Square>)
     }
 
+    if(this.state.human && this.state.com) {
+      style.display = 'none'
+    }
+
     return (
       <div className="App">
         <div id="board">
-          {(!this.state.com || !this.state.human) && <InfoScreen setPlayers={this.setPlayers}/>}
+          <InfoScreen childStyle={style} setPlayers={this.setPlayers}/>
           <div className="wrap">
            { board }
           </div>
