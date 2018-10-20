@@ -30,16 +30,24 @@ export default class App extends Component {
     this.placeMarker = this.placeMarker.bind(this)
   }
 
+  getScoreUpdateKey() {
+    return (this.state.turn % 2 !== 0 ? 'x' : 'o') + 'Score'
+  }
+
   placeMarker(squareId) {
-    const { spaces, turn } = this.state
+    const { spaces } = this.state
     const spaceIndex = spaces.indexOf(squareId)
     const newState = {}
 
     // determine which score to update
-    const scoreToUpdate = (turn % 2 !== 0 ? 'x' : 'o') + 'Score'
+    const scoreToUpdate = this.getScoreUpdateKey()
 
     // if the space is no longer available, do nothing
-    if(spaceIndex === -1) {
+    if(spaceIndex === -1) return
+
+    // check for game winning sequence
+    if(this.checkForWinner()) {
+      this.endGame()
       return
     }
 
@@ -57,6 +65,24 @@ export default class App extends Component {
     this.setState(newState)
   }
 
+  checkForWinner() {
+    
+    const { xScore, oScore, winSequences } = this.state
+
+    if(xScore.length < 3 || oScore.length < 3) {
+      return false
+    }
+
+    // loop through win sequences and check that the current players score array contains all spaces in the win sequence
+    for(let i = 0; i < winSequences.length; i++) {
+      // const seq = winSequences[i]
+    }
+
+    return false
+  }
+
+  endGame() {}
+
   setPlayers(event) {
     const human = event.target.textContent.toLowerCase()
     const com = human === 'x' ? 'o' : 'x'
@@ -64,12 +90,11 @@ export default class App extends Component {
   }
 
   marker(id) {
-    
     // space is still open
     if(this.state.spaces.indexOf(id) !== -1) {
       return ''
     }
-    
+
     return this.state.xScore.indexOf(id) === -1 ? 'o' : 'x'
   }
   
