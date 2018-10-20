@@ -62,13 +62,23 @@ export default class App extends Component {
     const com = human === 'x' ? 'o' : 'x'
     this.setState({ human, com })
   }
+
+  marker(id) {
+    
+    // space is still open
+    if(this.state.spaces.indexOf(id) !== -1) {
+      return ''
+    }
+    
+    return this.state.xScore.indexOf(id) === -1 ? 'o' : 'x'
+  }
   
   render() {
     const board = []
     const style = { display: 'block' }
 
     for(let i = 0; i < 9; i++) {
-      board.push(<Square id={i} key={i} placeMarker={this.placeMarker.bind(this, i)}></Square>)
+      board.push(<Square marker={this.marker.call(this, i)} key={i} placeMarker={this.placeMarker.bind(this, i)}></Square>)
     }
 
     if(this.state.human && this.state.com) {

@@ -60,9 +60,17 @@ div[class^="side-"] {
 }
 
 .square {
+  position: relative;
   background-color: red;
   margin: 1%;
   width: 31.25%;
   padding-bottom: 31.25%;
   float: left;
+}
+
+.marker {
+  font-size: 40px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
