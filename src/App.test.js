@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { mount, shallow } from 'enzyme'
  
-describe('Start a game', () => {
+describe('Start a new game', () => {
 
   it('renders without crashing', () => {
     const div = document.createElement('div');
@@ -26,11 +26,11 @@ describe('Start a game', () => {
   })
 })
 
-describe('Make a move', () => {
+describe('Make a move on the board', () => {
 
-  beforeEach(() => {
+  beforeAll(() => {
     const wrapper = mount(<App/>)
-    wrapper.find('.side-o').simulate('click')
+    wrapper.find('.side-x').simulate('click')
   })
 
   it('places a marker in the selected square', () => {
@@ -40,7 +40,7 @@ describe('Make a move', () => {
     const squareIndex = 0
     
     expect(squares).toHaveLength(9)
-    expect(wrapper.contains(<span className="marker">x</span>)).toBe(false)    
+    expect(wrapper.contains(<span className="marker">x</span>)).toBe(false)   
 
     const square = shallow(squares.get(squareIndex))
     
@@ -63,4 +63,10 @@ describe('Make a move', () => {
             .toBe(cond)    
     })
   })
+
+  it('places a marker automatically after to represent the computers move', () => {
+    
+  })
 })
+
+describe('Play through sequence', () => {})

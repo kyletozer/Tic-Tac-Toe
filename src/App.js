@@ -50,7 +50,6 @@ export default class App extends Component {
       this.endGame()
       return
     }
-
     // update the available spaces on the board
     newState.spaces = spaces.slice()
     newState.spaces.splice(spaceIndex, 1)
@@ -72,12 +71,10 @@ export default class App extends Component {
     if(xScore.length < 3 || oScore.length < 3) {
       return false
     }
-
     // loop through win sequences and check that the current players score array contains all spaces in the win sequence
     for(let i = 0; i < winSequences.length; i++) {
       // const seq = winSequences[i]
     }
-
     return false
   }
 
@@ -94,8 +91,21 @@ export default class App extends Component {
     if(this.state.spaces.indexOf(id) !== -1) {
       return ''
     }
-
     return this.state.xScore.indexOf(id) === -1 ? 'o' : 'x'
+  }
+
+  componentDidUpdate() {
+    const { com, spaces } = this.state
+
+    // determine if computer should make a move
+    if(this.getScoreUpdateKey().substring(0, 1) !== com) {
+      return
+    }
+    // get a random index from the remaining spaces array
+    const spacesIndex = Math.floor(Math.random() * spaces.length)
+
+    // place a marker on the space returned with the index
+    this.placeMarker(spaces.slice()[spacesIndex])
   }
   
   render() {
