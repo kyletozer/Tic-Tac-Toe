@@ -34,8 +34,13 @@ export default class App extends Component {
     return (this.state.turn % 2 !== 0 ? 'x' : 'o') + 'Score'
   }
 
-  placeMarker(squareId) {
+  placeMarker(squareId = null) {
     const { spaces } = this.state
+
+    if(!squareId) {
+      squareId = spaces[Math.floor(Math.random() * spaces.length)]
+    }
+
     const spaceIndex = spaces.indexOf(squareId)
     const newState = {}
 
@@ -102,10 +107,11 @@ export default class App extends Component {
       return
     }
     // get a random index from the remaining spaces array
-    const spacesIndex = Math.floor(Math.random() * spaces.length)
+    // const spacesIndex = Math.floor(Math.random() * spaces.length)
 
     // place a marker on the space returned with the index
-    this.placeMarker(spaces.slice()[spacesIndex])
+    // this.placeMarker(spaces.slice()[spacesIndex])
+    this.placeMarker()
   }
   
   render() {

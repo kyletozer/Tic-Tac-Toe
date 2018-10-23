@@ -39,13 +39,18 @@ describe('Make a move on the board', () => {
     const squares = wrapper.find('.square')
     const squareIndex = 0
     
-    expect(squares).toHaveLength(9)
     expect(wrapper.contains(<span className="marker">x</span>)).toBe(false)   
+    expect(wrapper.state('spaces')).toHaveLength(9)
+    expect(wrapper.state('xScore')).toHaveLength(0)
 
     const square = shallow(squares.get(squareIndex))
-    
+
+    // make a move
     wrapper.instance().placeMarker.call(square, squareIndex)
     wrapper.update()
+
+    expect(wrapper.state('spaces')).toHaveLength(8)
+    expect(wrapper.state('xScore')).toHaveLength(1)
 
     wrapper
       .find('.square')
@@ -54,6 +59,7 @@ describe('Make a move on the board', () => {
         if(index === squareIndex) {
           cond = true
         }
+        debugger
         expect(
           node
             .contains(
@@ -62,10 +68,6 @@ describe('Make a move on the board', () => {
           )
             .toBe(cond)    
     })
-  })
-
-  it('places a marker automatically after to represent the computers move', () => {
-    
   })
 })
 
