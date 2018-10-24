@@ -59,7 +59,6 @@ describe('Make a move on the board', () => {
         if(index === squareIndex) {
           cond = true
         }
-        debugger
         expect(
           node
             .contains(
@@ -71,4 +70,23 @@ describe('Make a move on the board', () => {
   })
 })
 
-describe('Play through sequence', () => {})
+describe('Play through sequence', () => {
+
+  it('should only check for a winning sequence after turn 4', () => {
+    
+    const wrapper = mount(<App/>)
+    const squares = wrapper.find('.square')
+    const sequence = [1, 2, 3, 4, 5]
+    const instance = wrapper.instance()
+
+    jest.spyOn(instance, 'checkForWinner')
+
+    sequence.forEach((seq, i) => {
+      const context = (i % 2 !== 0) ? squares.get(seq) : null
+      instance.placeMarker.call(context, seq)
+      wrapper.update()
+    })
+
+    expect(instance.checkForWinner).toHaveBeenCalledTimes(1)
+  })
+})

@@ -35,9 +35,9 @@ export default class App extends Component {
   }
 
   placeMarker(squareId = null) {
-    const { spaces } = this.state
+    const { spaces, turn } = this.state
 
-    if(!squareId) {
+    if(typeof squareId === 'object') {
       squareId = spaces[Math.floor(Math.random() * spaces.length)]
     }
 
@@ -51,7 +51,7 @@ export default class App extends Component {
     if(spaceIndex === -1) return
 
     // check for game winning sequence
-    if(this.checkForWinner()) {
+    if(turn > 4 && this.checkForWinner()) {
       this.endGame()
       return
     }
@@ -70,12 +70,7 @@ export default class App extends Component {
   }
 
   checkForWinner() {
-    
-    const { xScore, oScore, winSequences } = this.state
-
-    if(xScore.length < 3 || oScore.length < 3) {
-      return false
-    }
+    const { winSequences } = this.state
     // loop through win sequences and check that the current players score array contains all spaces in the win sequence
     for(let i = 0; i < winSequences.length; i++) {
       // const seq = winSequences[i]
@@ -100,17 +95,10 @@ export default class App extends Component {
   }
 
   componentDidUpdate() {
-    const { com, spaces } = this.state
-
     // determine if computer should make a move
-    if(this.getScoreUpdateKey().substring(0, 1) !== com) {
+    if(this.getScoreUpdateKey().substring(0, 1) !== this.state.com) {
       return
     }
-    // get a random index from the remaining spaces array
-    // const spacesIndex = Math.floor(Math.random() * spaces.length)
-
-    // place a marker on the space returned with the index
-    // this.placeMarker(spaces.slice()[spacesIndex])
     this.placeMarker()
   }
   
