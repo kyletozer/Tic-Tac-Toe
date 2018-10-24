@@ -30,15 +30,18 @@ export default class App extends Component {
     this.placeMarker = this.placeMarker.bind(this)
   }
 
-  getScoreUpdateKey() {
-    return (this.state.turn % 2 !== 0 ? 'x' : 'o') + 'Score'
+  getScoreUpdateKey(inverse = false) {
+    const { turn } = this.state
+    let cond = inverse ? turn % 2 === 0 : turn % 2 !== 0
+    return (cond ? 'x' : 'o') + 'Score'
   }
 
   placeMarker(squareId = null) {
     const { spaces, turn } = this.state
 
+    // no id indicates computer move
     if(typeof squareId === 'object') {
-      squareId = spaces[Math.floor(Math.random() * spaces.length)]
+      squareId = this.getNextMove()
     }
 
     const spaceIndex = spaces.indexOf(squareId)
@@ -65,8 +68,39 @@ export default class App extends Component {
 
     // increment turn count
     newState.turn = this.state.turn + 1
-
     this.setState(newState)
+  }
+
+  getNextMove() {
+    const { spaces, turn, winSequences } = this.state
+    // choose random square if turn count is less than required to start blocking
+    if(turn <= 3) {
+      return spaces[Math.floor(Math.random() * spaces.length)]
+    }
+
+    const humanScore = this.state[this.getScoreUpdateKey(true)]
+
+    for(let i = 0; i < winSequences.length; i++) {
+      const seq = winSequences[i]
+      const threat = seq.slice()
+      console.log('sequence:', seq)
+      console.log('threat:', threat)
+      for(let j = 0; j < seq.length; j++) {
+        const space = seq[j]
+        console.log('human score:', humanScore)
+        console.log('updated threat:', threat)
+        console.log('space:', space, 'is in human score', humanScore.indexOf(space))
+        if(humanScore.indexOf(space) !== -1) {
+          threat.splice(humanScore.indexOf(space), 1)
+        }
+        // if the human players score contains 2 out of 3 winning spaces and the remaining space to complete the win sequence is still available
+        if(threat.length === 1 && spaces.indexOf(threat[0]) !== -1) {
+          console.log('threat is now a danger')
+          return threat[0]
+        }
+      }
+      console.log('---')
+    }    
   }
 
   checkForWinner() {

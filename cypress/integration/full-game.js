@@ -5,10 +5,8 @@ describe('Playing through a game', () => {
     cy.chooseSide('x')
   })
   
-  it('should place a marker on a tile that has been clicked', () => {
-    
-    cy
-      .chooseSquare(5)
-      
+  it('should play through a sequence', () => {
+    cy.chooseSquare(4)
+    cy.chooseSquare()
   })
 })
