@@ -79,28 +79,37 @@ export default class App extends Component {
     }
 
     const humanScore = this.state[this.getScoreUpdateKey(true)]
+    const comScore = this.state[this.getScoreUpdateKey()]
 
     for(let i = 0; i < winSequences.length; i++) {
       const seq = winSequences[i]
       const threat = seq.slice()
-      console.log('sequence:', seq)
-      console.log('threat:', threat)
+      const victory = seq.slice()
+      // console.log('sequence:', seq)
+      // console.log('human score:', humanScore)
       for(let j = 0; j < seq.length; j++) {
         const space = seq[j]
-        console.log('human score:', humanScore)
-        console.log('updated threat:', threat)
-        console.log('space:', space, 'is in human score', humanScore.indexOf(space))
-        if(humanScore.indexOf(space) !== -1) {
-          threat.splice(humanScore.indexOf(space), 1)
+        const inHumanScore = humanScore.indexOf(space)
+        const inComScore = comScore.indexOf(space)
+        // console.log('space:', space, 'in human score:', inHumanScore)
+        if(inHumanScore !== -1) {
+          threat.splice(threat.indexOf(space), 1)
         }
-        // if the human players score contains 2 out of 3 winning spaces and the remaining space to complete the win sequence is still available
-        if(threat.length === 1 && spaces.indexOf(threat[0]) !== -1) {
-          console.log('threat is now a danger')
-          return threat[0]
+        if(inComScore !== -1) {
+          victory.splice(victory.indexOf(space), 1)
         }
       }
+      // console.log('updated threat:', threat)
+      // console.log('threat is still available', spaces.indexOf(threat[0]) !== -1)
+      if(threat.length === 1 && spaces.indexOf(threat[0]) !== -1) {
+        return threat[0]
+      }
+      if(victory.length === 1 && spaces.indexOf(victory[0]) !== -1) {
+        return victory[0]
+      }
       console.log('---')
-    }    
+    }
+    return spaces[0]
   }
 
   checkForWinner() {
