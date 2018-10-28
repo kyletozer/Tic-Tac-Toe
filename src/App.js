@@ -8,6 +8,7 @@ export default class App extends Component {
     super(props)
     
     this.state = {
+      winner: true,
       turn: 1,
       human: null,
       com: null,
@@ -38,11 +39,6 @@ export default class App extends Component {
 
   placeMarker(squareId = null) {
     const { spaces } = this.state
-
-    // no id indicates computer move
-    // if(typeof squareId === 'object') {
-    //   squareId = this.getNextMove()
-    // }
 
     const spaceIndex = spaces.indexOf(squareId)
     const newState = {}
@@ -135,7 +131,7 @@ export default class App extends Component {
   setPlayers(event) {
     const human = event.target.textContent.toLowerCase()
     const com = human === 'x' ? 'o' : 'x'
-    this.setState({ human, com })
+    this.setState({ human, com, winner: false })
   }
 
   marker(id) {
@@ -147,25 +143,23 @@ export default class App extends Component {
   }
 
   componentDidUpdate() {
-    if(this.state.turn > 5 && this.checkForWinner()) {
+    const { turn } = this.state
+    if(turn > 5 && this.checkForWinner()) {
       this.endGame()
     }
-    // determine if computer should make a move
-    // if(this.getScoreUpdateKey().substring(0, 1) === this.state.com) {
-    //   this.placeMarker()     
-    // }
   }
   
   render() {
     const board = []
-    const style = { display: 'block' }
+    const style = { display: 'none' }
 
     for(let i = 0; i < 9; i++) {
       board.push(<Square marker={this.marker.call(this, i)} key={i} placeMarker={this.placeMarker.bind(this, i)}></Square>)
     }
 
-    if(this.state.human && this.state.com) {
-      style.display = 'none'
+    // show overlay
+    if(this.state.winner) {
+      style.display = 'block'
     }
 
     return (
