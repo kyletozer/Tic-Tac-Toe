@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import Square from './components/Square'
 import InfoScreen from './components/InfoScreen'
 
+const getSpaces = () => [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+
 export default class App extends Component {
 
   constructor(props) {
     super(props)
     
     this.state = {
-      winner: true,
+      winner: false,
       turn: 1,
       human: null,
       com: null,
-      spaces: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
+      spaces: getSpaces(),
       xScore: [],
       oScore: [],
       winSequences: [
@@ -104,7 +106,6 @@ export default class App extends Component {
   }
 
   checkForWinner() {
-    console.log('checking for winner')
     // check the player score of the previous turn as by the time it does the check it will be in a new turn cycle
     const { winSequences } = this.state
     const score = this.state[this.getScoreUpdateKey(true)]
@@ -125,13 +126,25 @@ export default class App extends Component {
   }
 
   endGame() {
-    console.log('game over')
+    this.setState({
+      winner: this.getScoreUpdateKey(true).substring(0, 1)
+    })
   }
 
   setPlayers(event) {
     const human = event.target.textContent.toLowerCase()
     const com = human === 'x' ? 'o' : 'x'
-    this.setState({ human, com, winner: false })
+    
+    // reset game state
+    this.setState({
+      human,
+      com,
+      winner: null,
+      xScore: [],
+      oScore: [],
+      spaces: getSpaces(),
+      turn: 1
+    })
   }
 
   marker(id) {
@@ -143,7 +156,10 @@ export default class App extends Component {
   }
 
   componentDidUpdate() {
-    const { turn } = this.state
+    const { turn, winner } = this.state
+    
+    if(winner) return
+    
     if(turn > 5 && this.checkForWinner()) {
       this.endGame()
     }
@@ -152,20 +168,28 @@ export default class App extends Component {
   render() {
     const board = []
     const style = { display: 'none' }
+    const { com, human, winner } = this.state
+    let message = ''
 
     for(let i = 0; i < 9; i++) {
       board.push(<Square marker={this.marker.call(this, i)} key={i} placeMarker={this.placeMarker.bind(this, i)}></Square>)
     }
 
+    if(winner === human) {
+      message = 'You Win!'
+    } else if(winner === com) {
+      message = 'You Lose!'
+    }
+
     // show overlay
-    if(this.state.winner) {
+    if(!com || winner) {
       style.display = 'block'
     }
 
     return (
       <div className="App">
         <div id="board">
-          <InfoScreen childStyle={style} setPlayers={this.setPlayers}/>
+          <InfoScreen childStyle={style} setPlayers={this.setPlayers} message={message}/>
           <div className="wrap">
            { board }
           </div>

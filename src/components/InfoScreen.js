@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class InfoScreen extends Component {
+export default function InfoScreen(props) {
+  
+  const { childStyle, message } = props
 
-  render() {
-    return (
-      <div style={this.props.childStyle} className="overlay">
-        <h2>Choose a side</h2>
-        <div className="choose-team" onClick={this.props.setPlayers}>
-          <div className="side-x">X</div>
-          <div className="side-o">O</div>
-        </div>
+  return (
+    <div style={childStyle} className="overlay">
+      { message && <div className="winner">
+        "{ message }"
+      </div> }
+      <h2>Choose a side</h2>
+      <div className="choose-team" onClick={props.setPlayers}>
+        <div className="side-x">X</div>
+        <div className="side-o">O</div>
       </div>
-    )
-  }
+    </div>
+  )
 }
