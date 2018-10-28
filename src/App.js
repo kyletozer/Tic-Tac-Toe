@@ -29,7 +29,7 @@ export default class App extends Component {
       ]
     }
   
-    this.setPlayers = this.setPlayers.bind(this)
+    this.startGame = this.startGame.bind(this)
     this.placeMarker = this.placeMarker.bind(this)
   }
 
@@ -131,7 +131,7 @@ export default class App extends Component {
     })
   }
 
-  setPlayers(event) {
+  startGame(event) {
     const human = event.target.textContent.toLowerCase()
     const com = human === 'x' ? 'o' : 'x'
     
@@ -168,7 +168,7 @@ export default class App extends Component {
   render() {
     const board = []
     const style = { display: 'none' }
-    const { com, human, winner } = this.state
+    const { com, human, winner, turn } = this.state
     let message = ''
 
     for(let i = 0; i < 9; i++) {
@@ -177,8 +177,15 @@ export default class App extends Component {
 
     if(winner === human) {
       message = 'You Win!'
-    } else if(winner === com) {
+    }
+    
+    if(winner === com) {
       message = 'You Lose!'
+    }
+
+    if(turn === 10) {
+      message = 'Draw!'
+      style.display = 'block'
     }
 
     // show overlay
@@ -189,7 +196,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <div id="board">
-          <InfoScreen childStyle={style} setPlayers={this.setPlayers} message={message}/>
+          <InfoScreen childStyle={style} startGame={this.startGame} message={message}/>
           <div className="wrap">
            { board }
           </div>
