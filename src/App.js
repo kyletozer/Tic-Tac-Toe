@@ -37,12 +37,12 @@ export default class App extends Component {
   }
 
   placeMarker(squareId = null) {
-    const { spaces, turn } = this.state
+    const { spaces } = this.state
 
     // no id indicates computer move
-    if(typeof squareId === 'object') {
-      squareId = this.getNextMove()
-    }
+    // if(typeof squareId === 'object') {
+    //   squareId = this.getNextMove()
+    // }
 
     const spaceIndex = spaces.indexOf(squareId)
     const newState = {}
@@ -53,11 +53,6 @@ export default class App extends Component {
     // if the space is no longer available, do nothing
     if(spaceIndex === -1) return
 
-    // check for game winning sequence
-    if(turn > 4 && this.checkForWinner()) {
-      this.endGame()
-      return
-    }
     // update the available spaces on the board
     newState.spaces = spaces.slice()
     newState.spaces.splice(spaceIndex, 1)
@@ -107,21 +102,35 @@ export default class App extends Component {
       if(victory.length === 1 && spaces.indexOf(victory[0]) !== -1) {
         return victory[0]
       }
-      console.log('---')
+      // console.log('---')
     }
     return spaces[0]
   }
 
   checkForWinner() {
+    console.log('checking for winner')
+    // check the player score of the previous turn as by the time it does the check it will be in a new turn cycle
     const { winSequences } = this.state
-    // loop through win sequences and check that the current players score array contains all spaces in the win sequence
+    const score = this.state[this.getScoreUpdateKey(true)]
+
     for(let i = 0; i < winSequences.length; i++) {
-      // const seq = winSequences[i]
+      const seq = winSequences[i]
+      for(let j = 0; j < seq.length; j++) {
+        const space = seq[j]
+        if(score.indexOf(space) === -1) {
+          break
+        }
+        if(j === 2) {
+          return true
+        }
+      }
     }
     return false
   }
 
-  endGame() {}
+  endGame() {
+    console.log('game over')
+  }
 
   setPlayers(event) {
     const human = event.target.textContent.toLowerCase()
@@ -138,11 +147,13 @@ export default class App extends Component {
   }
 
   componentDidUpdate() {
-    // determine if computer should make a move
-    if(this.getScoreUpdateKey().substring(0, 1) !== this.state.com) {
-      return
+    if(this.state.turn > 5 && this.checkForWinner()) {
+      this.endGame()
     }
-    this.placeMarker()
+    // determine if computer should make a move
+    // if(this.getScoreUpdateKey().substring(0, 1) === this.state.com) {
+    //   this.placeMarker()     
+    // }
   }
   
   render() {

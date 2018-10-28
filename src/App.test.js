@@ -89,4 +89,22 @@ describe('Play through sequence', () => {
 
     expect(instance.checkForWinner).toHaveBeenCalledTimes(1)
   })
+
+  it.only('should confirm that the game has been won', () => {
+    const wrapper = mount(<App/>)
+    const squares = wrapper.find('.square')
+    const sequence = [0, 5, 1, 4, 2]
+    const instance = wrapper.instance()
+
+    jest.spyOn(instance, 'checkForWinner')
+    jest.spyOn(instance, 'endGame')
+
+    sequence.forEach((seq, i) => {
+      const context = (i % 2 !== 0) ? squares.get(seq) : null
+      instance.placeMarker.call(context, seq)
+      wrapper.update()
+    })
+
+    expect(instance.endGame).toHaveBeenCalledTimes(1)
+  })
 })

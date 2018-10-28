@@ -6,7 +6,10 @@ describe('Playing through a game', () => {
   })
   
   it('should play through a sequence', () => {
-    cy.chooseSquare(4)
-    cy.chooseSquare()
+    cy.chooseSquare(0)
+    cy.chooseSquare(7)
+    cy.chooseSquare(1)
+    cy.chooseSquare(6)
+    cy.chooseSquare(2)
   })
 })
