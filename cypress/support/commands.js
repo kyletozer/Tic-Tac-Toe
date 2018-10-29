@@ -1,14 +1,29 @@
-Cypress.Commands.add('chooseSide', side => {
-  return cy.get(`.side-${side}`).click()
+Cypress.Commands.add('startGame', (options = { player: 'friend', side: 'x' }) => {
+  
+  const { player, side } = options
+
+  cy
+    .get('#set-players')
+    .as('form')
+  
+  cy
+    .get('@form')
+    .get(`input[value="${player}"]`)
+    .click()
+
+  cy
+    .get('@form')
+    .get(`input[value="${side}"]`)
+
+  cy
+    .get('@form')
+    .get('button[type="submit"]')
+    .click()
 })
 
-Cypress.Commands.add('chooseSquare', id => {
-  const selector = '.square'
-  
-  cy.wait(200)
-  
-  if(id === undefined) {
-    return cy.get(`${selector}:not(.marked)`).eq(0).click()
-  }
-  return cy.get(selector).eq(id).click()
+Cypress.Commands.add('performSequence', sequence => {
+  sequence.forEach(space => {
+    cy.wait(100)
+    cy.get('.square').eq(space).click()
+  })
 })

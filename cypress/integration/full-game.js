@@ -2,15 +2,10 @@ describe('Playing through a game', () => {
   
   beforeEach(() => {
     cy.visit('/')
-    cy.chooseSide('x')
+    cy.startGame()
   })
   
   it('should play through a sequence and start a new game immediately after', () => {
-    cy.chooseSquare(0)
-    cy.chooseSquare(7)
-    cy.chooseSquare(1)
-    cy.chooseSquare(6)
-    cy.chooseSquare(2)
-    cy.chooseSide('o')
+    cy.performSequence([0, 3, 1, 4, 2])
   })
 })

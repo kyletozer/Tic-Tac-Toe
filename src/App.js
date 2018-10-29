@@ -133,6 +133,7 @@ export default class App extends Component {
 
   startGame(data, event) {
     console.log(data, event)
+    // finish merging data from infoscreen component into state update
     event.preventDefault()
     const human = event.target.textContent.toLowerCase()
     const com = human === 'x' ? 'o' : 'x'
