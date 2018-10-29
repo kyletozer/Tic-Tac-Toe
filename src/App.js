@@ -131,7 +131,9 @@ export default class App extends Component {
     })
   }
 
-  startGame(event) {
+  startGame(data, event) {
+    console.log(data, event)
+    event.preventDefault()
     const human = event.target.textContent.toLowerCase()
     const com = human === 'x' ? 'o' : 'x'
     
@@ -196,7 +198,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <div id="board">
-          <InfoScreen childStyle={style} startGame={this.startGame} message={message}/>
+          <InfoScreen childStyle={style} startGame={this.startGame.bind(this)} message={message}/>
           <div className="wrap">
            { board }
           </div>
