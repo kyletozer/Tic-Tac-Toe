@@ -1,5 +1,7 @@
-Cypress.Commands.add('startGame', (options = { player: 'friend', side: 'x' }) => {
+Cypress.Commands.add('startGame', (options = {}) => {
   
+  options = {...{ player: 'friend', side: 'x' }, ...options}
+
   const { player, side } = options
 
   cy
@@ -26,4 +28,8 @@ Cypress.Commands.add('performSequence', sequence => {
     cy.wait(100)
     cy.get('.square').eq(space).click()
   })
+})
+
+Cypress.Commands.add('chooseSquare', (squareId = 0) => {
+  cy.get('.square').eq(squareId).click()
 })

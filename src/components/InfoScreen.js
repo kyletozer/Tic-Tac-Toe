@@ -21,7 +21,7 @@ export default class InfoScreen extends Component {
     } else {
       newState[field] = event.target.value
     }
-    
+
     this.setState(newState)
   }
 
@@ -54,11 +54,6 @@ export default class InfoScreen extends Component {
 
           <button type="submit">Start Game</button>
         </form>
-        
-        {/* <div className="choose-team" onClick={startGame}>
-          <div className="side-x">X</div>
-          <div className="side-o">O</div>
-        </div> */}
       </div>
     )
   }

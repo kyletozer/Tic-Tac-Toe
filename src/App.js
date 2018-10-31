@@ -10,6 +10,7 @@ export default class App extends Component {
     super(props)
     
     this.state = {
+      friend: false,
       winner: false,
       turn: 1,
       human: null,
@@ -41,6 +42,10 @@ export default class App extends Component {
 
   placeMarker(squareId = null) {
     const { spaces } = this.state
+
+    if(typeof squareId === 'object') {
+      squareId = this.getNextMove()
+    }
 
     const spaceIndex = spaces.indexOf(squareId)
     const newState = {}
@@ -78,6 +83,7 @@ export default class App extends Component {
       const seq = winSequences[i]
       const threat = seq.slice()
       const victory = seq.slice()
+      // the threat and victory arrays keep track of which winning combination spaces are held by the human and computer players respectively
       // console.log('sequence:', seq)
       // console.log('human score:', humanScore)
       for(let j = 0; j < seq.length; j++) {
@@ -94,9 +100,14 @@ export default class App extends Component {
       }
       // console.log('updated threat:', threat)
       // console.log('threat is still available', spaces.indexOf(threat[0]) !== -1)
+
+      // if the human player only has corner spaces, make winning take precedence over blocking
+
+      // the human player only requires one more space in the current sequence for a win; take that space
       if(threat.length === 1 && spaces.indexOf(threat[0]) !== -1) {
         return threat[0]
       }
+      // only one more space is required in the current sequence for a win; take that space
       if(victory.length === 1 && spaces.indexOf(victory[0]) !== -1) {
         return victory[0]
       }
@@ -132,14 +143,13 @@ export default class App extends Component {
   }
 
   startGame(data, event) {
-    console.log(data, event)
-    // finish merging data from infoscreen component into state update
     event.preventDefault()
-    const human = event.target.textContent.toLowerCase()
+    const human = data.human
     const com = human === 'x' ? 'o' : 'x'
     
     // reset game state
     this.setState({
+      friend: data.friend,
       human,
       com,
       winner: null,
@@ -159,13 +169,21 @@ export default class App extends Component {
   }
 
   componentDidUpdate() {
-    const { turn, winner } = this.state
+    const { turn, winner, com, friend } = this.state
     
+    // if a winner is set, do nothing
     if(winner) return
     
+    // check for a winner and end the current game if a winner exists
     if(turn > 5 && this.checkForWinner()) {
       this.endGame()
+      return
     }
+
+    // determine if the computer should make a move
+    if(!friend && this.getScoreUpdateKey().substring(0, 1) === com) { 
+      this.placeMarker()      
+    } 
   }
   
   render() {
