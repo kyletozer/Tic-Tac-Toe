@@ -13,14 +13,16 @@ describe('Start a new game', () => {
 
   it('player is prompted to go first when side "x" is chosen', () => {
     const wrapper = mount(<App/>)
-    wrapper.find('.side-x').simulate('click')
+    wrapper.find('#set-players').simulate('submit')
     expect(wrapper.state('human')).toBe('x')
     expect(wrapper.state('com')).toBe('o')
   })
 
   it('player is prompted to go second when side "o" is chosen', () => {
     const wrapper = mount(<App/>)
-    wrapper.find('.side-o').simulate('click')
+    const form = wrapper.find('#set-players')
+    form.find('input[value="o"]').simulate('change', { target: { value: 'o' } })
+    form.simulate('submit')
     expect(wrapper.state('human')).toBe('o')
     expect(wrapper.state('com')).toBe('x')
   })
@@ -30,7 +32,7 @@ describe('Make a move on the board', () => {
 
   beforeAll(() => {
     const wrapper = mount(<App/>)
-    wrapper.find('.side-x').simulate('click')
+    wrapper.find('#set-players').simulate('submit')
   })
 
   it('places a marker in the selected square', () => {

@@ -70,12 +70,7 @@ export default class App extends Component {
   }
 
   getNextMove() {
-    const { spaces, turn, winSequences } = this.state
-    // choose random square if turn count is less than required to start blocking
-    if(turn <= 3) {
-      return spaces[Math.floor(Math.random() * spaces.length)]
-    }
-
+    const { spaces, turn, winSequences, com } = this.state
     const humanScore = this.state[this.getScoreUpdateKey(true)]
     const comScore = this.state[this.getScoreUpdateKey()]
 
@@ -100,20 +95,27 @@ export default class App extends Component {
       }
       // console.log('updated threat:', threat)
       // console.log('threat is still available', spaces.indexOf(threat[0]) !== -1)
-
-      // if the human player only has corner spaces, make winning take precedence over blocking
-
-      // the human player only requires one more space in the current sequence for a win; take that space
-      if(threat.length === 1 && spaces.indexOf(threat[0]) !== -1) {
-        return threat[0]
+      
+      // human takes corner in first move
+      if(com === 'o' && turn === 2 && [0, 2, 6, 8].indexOf(humanScore[0]) !== -1) {
+        return 4
       }
-      // only one more space is required in the current sequence for a win; take that space
+      // human takes opposing corners in second move
+      if(com === 'o' && turn === 4 && ([0, 8].every(space => humanScore.indexOf(space) !== -1) || [2, 6].every(space => humanScore.indexOf(space) !== -1))) {
+        return 1
+      }
+      // win
       if(victory.length === 1 && spaces.indexOf(victory[0]) !== -1) {
         return victory[0]
       }
+      // block     
+      if(threat.length === 1 && spaces.indexOf(threat[0]) !== -1) {
+        return threat[0]
+      }
       // console.log('---')
     }
-    return spaces[0]
+    // choose random square if turn count is less than required to start blocking
+    return spaces[Math.floor(Math.random() * spaces.length)]
   }
 
   checkForWinner() {
