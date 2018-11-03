@@ -82,3 +82,52 @@ div[class^="side-"] {
 #set-players > div > label {
   display: inline-block;
 }
+
+#set-players .form-group {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px 0 10px;
+}
+
+#set-players legend {
+  padding: 10px 0;
+}
+
+#set-players label {
+  position: relative;
+  width: 30%;
+  padding-bottom: 30%;
+  margin: 0 6px;
+}
+
+#set-players input {
+  display: none;
+  position: absolute;
+}
+
+#set-players input + div {
+  border-radius: 6px;
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: solid thin rgba(255, 255, 255, .25);
+}
+
+#set-players input:checked + div {
+  background: rgba(255, 255, 255, .25);
+}
+
+#set-players input:checked + i {
+}
+
+#set-players i {
+  font-size: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

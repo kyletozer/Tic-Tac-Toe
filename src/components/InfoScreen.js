@@ -41,19 +41,31 @@ export default class InfoScreen extends Component {
         <form id="set-players" onSubmit={startGame.bind(null, this.state)}>
           
           <div className="form-group">
-            <legend>Choose your opponent</legend><br/>
+            <legend>Choose your opponent</legend>
             <label htmlFor="opponent-computer">
-              <input id="opponent-computer" type="radio" name="opponent" value="computer" checked={!friend ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'friend')} /> Computer
+              <input id="opponent-computer" type="radio" name="opponent" value="computer" checked={!friend ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'friend')} />
+              <div></div>
+              <i className="fas fa-desktop"></i>
             </label>
             <label htmlFor="opponent-friend">
-              <input id="opponent-friend" type="radio" name="opponent" value="friend" checked={friend ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'friend')} /> Friend
+              <input id="opponent-friend" type="radio" name="opponent" value="friend" checked={friend ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'friend')} />
+              <div></div>
+              <i className="fas fa-user"></i>
             </label>
           </div>
 
           <div className="form-group">
-            <legend>Choose your side</legend><br/>
-            <input type="radio" name="team" value="x" checked={human === 'x' ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'human')} /> X<br/>
-            <input type="radio" name="team" value="o" checked={human === 'o' ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'human')} /> O<br/>
+            <legend>Choose your side</legend>
+            <label htmlFor="team-x">
+              <input id="team-x" type="radio" name="team" value="x" checked={human === 'x' ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'human')} />
+              <div></div>
+              <i className="fas fa-times"></i>
+            </label>
+            <label htmlFor="team-o">
+              <input id="team-o" type="radio" name="team" value="o" checked={human === 'o' ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'human')} />
+              <div></div>
+              <i className="far fa-circle"></i>
+            </label>
           </div>
 
           <button type="submit">Start Game</button>
