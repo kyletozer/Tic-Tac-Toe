@@ -33,10 +33,10 @@ export default class InfoScreen extends Component {
       <div style={childStyle} className="overlay">
         
         { message && <div className="winner">
-          "{ message }"
+          { message }
         </div> }
         
-        <h2>Tic Tac Toe</h2>
+        <h2 className="heading">Tic Tac Toe</h2>
 
         <form id="set-players" onSubmit={startGame.bind(null, this.state)}>
           
