@@ -115,7 +115,7 @@ describe('Computer intelligence as "o"', () => {
     wrapper.find('#set-players').simulate('submit')
   })
 
-  it.only('chooses the center square if the human player selects a corner for their first move', () => {
+  it('chooses the center square if the human player selects a corner for their first move', () => {
     const wrapper = mount(<App/>)
     const squares = wrapper.find('.square')
     const instance = wrapper.instance()

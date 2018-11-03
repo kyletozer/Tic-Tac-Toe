@@ -41,13 +41,17 @@ export default class InfoScreen extends Component {
         <form id="set-players" onSubmit={startGame.bind(null, this.state)}>
           
           <div className="form-group">
-            <label>Choose your opponent</label><br/>
-            <input type="radio" name="opponent" value="computer" checked={!friend ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'friend')} /> Computer<br/>
-            <input type="radio" name="opponent" value="friend" checked={friend ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'friend')} /> Friend<br/>
+            <legend>Choose your opponent</legend><br/>
+            <label htmlFor="opponent-computer">
+              <input id="opponent-computer" type="radio" name="opponent" value="computer" checked={!friend ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'friend')} /> Computer
+            </label>
+            <label htmlFor="opponent-friend">
+              <input id="opponent-friend" type="radio" name="opponent" value="friend" checked={friend ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'friend')} /> Friend
+            </label>
           </div>
 
           <div className="form-group">
-            <label>Choose your side</label><br/>
+            <legend>Choose your side</legend><br/>
             <input type="radio" name="team" value="x" checked={human === 'x' ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'human')} /> X<br/>
             <input type="radio" name="team" value="o" checked={human === 'o' ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'human')} /> O<br/>
           </div>

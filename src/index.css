@@ -74,3 +74,11 @@ div[class^="side-"] {
   top: 10px;
   left: 10px;
 }
+
+#set-players > div {
+  margin: 40px 0;
+}
+
+#set-players > div > label {
+  display: inline-block;
+}
