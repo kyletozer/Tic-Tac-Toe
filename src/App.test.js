@@ -28,7 +28,7 @@ describe('Start a new game', () => {
   })
 })
 
-describe('Make a move on the board', () => {
+describe('Making moves', () => {
 
   beforeAll(() => {
     const wrapper = mount(<App/>)
@@ -70,9 +70,6 @@ describe('Make a move on the board', () => {
             .toBe(cond)    
     })
   })
-})
-
-describe('Play through sequence', () => {
 
   it('should only check for a winning sequence after turn 4', () => {
     
@@ -110,3 +107,25 @@ describe('Play through sequence', () => {
     expect(instance.endGame).toHaveBeenCalledTimes(1)
   })
 })
+
+describe('Computer intelligence as "o"', () => {
+
+  beforeAll(() => {
+    const wrapper = mount(<App/>)
+    wrapper.find('#set-players').simulate('submit')
+  })
+
+  it.only('chooses the center square if the human player selects a corner for their first move', () => {
+    const wrapper = mount(<App/>)
+    const squares = wrapper.find('.square')
+    const instance = wrapper.instance()
+
+    wrapper.setState({ human: 'x', com: 'o' })
+
+    instance.placeMarker.call(squares.get(0), 0)
+    wrapper.update()
+    
+    expect(shallow(wrapper.find('.wrap').children().get(0)).text()).toBe('x')
+    expect(shallow(wrapper.find('.wrap').children().get(4)).text()).toBe('o')
+  })
+}) 
