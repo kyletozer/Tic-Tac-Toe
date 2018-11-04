@@ -43,20 +43,17 @@ div[class^="side-"] {
 }
 
 #board {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  margin-bottom: 20px;
 }
 
 .wrap {
   max-width: 600px;
   width: 100%;
+  margin: 0 auto;
 }
 
 .square {
-  background-color: red;
+  background-color: lightcoral;
   margin: 1%;
   width: 31.25%;
   padding-bottom: 31.25%;
@@ -163,4 +160,19 @@ div[class^="side-"] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.player-info {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.player-info span {
+  margin: 0 20px;
+}
+
+.player-info i {
+  margin: 0 10px;
 }

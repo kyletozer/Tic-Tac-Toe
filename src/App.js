@@ -10,6 +10,7 @@ export default class App extends Component {
     super(props)
     
     this.state = {
+      inProgress: false,
       friend: false,
       winner: false,
       turn: 1,
@@ -140,7 +141,8 @@ export default class App extends Component {
 
   endGame() {
     this.setState({
-      winner: this.getScoreUpdateKey(true).substring(0, 1)
+      winner: this.getScoreUpdateKey(true).substring(0, 1),
+      inProgress: false
     })
   }
 
@@ -158,7 +160,8 @@ export default class App extends Component {
       xScore: [],
       oScore: [],
       spaces: getSpaces(),
-      turn: 1
+      turn: 1,
+      inProgress: true
     })
   }
 
@@ -191,8 +194,13 @@ export default class App extends Component {
   render() {
     const board = []
     const style = { display: 'none' }
-    const { com, human, winner, turn } = this.state
+    const { com, human, winner, turn, inProgress } = this.state
     let message = ''
+
+    const playerInfo = <div className="player-info">
+      <span><i className="fas fa-user"></i>{ human }</span>
+      <span><i className="fas fa-desktop"></i>{ com }</span>
+    </div>
 
     for(let i = 0; i < 9; i++) {
       board.push(<Square marker={this.marker.call(this, i)} key={i} placeMarker={this.placeMarker.bind(this, i)}></Square>)
@@ -214,9 +222,13 @@ export default class App extends Component {
 
     return (
       <div className="App">
+
+        <InfoScreen childStyle={style} startGame={this.startGame.bind(this)} message={message}/>
+        
+        { inProgress && playerInfo }
+
         <div id="board">
-          <InfoScreen childStyle={style} startGame={this.startGame.bind(this)} message={message}/>
-          <div className="wrap perfect-center-child">
+          <div className="wrap">
            { board }
           </div>
         </div>
