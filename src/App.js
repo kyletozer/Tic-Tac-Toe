@@ -200,13 +200,9 @@ export default class App extends Component {
 
     if(winner === human) {
       message = 'You Win!'
-    }
-    
-    if(winner === com) {
+    } else if(winner === com) {
       message = 'You Lose!'
-    }
-
-    if(turn === 10) {
+    } else if(turn === 10) {
       message = 'Draw!'
       style.display = 'block'
     }
@@ -220,7 +216,7 @@ export default class App extends Component {
       <div className="App">
         <div id="board">
           <InfoScreen childStyle={style} startGame={this.startGame.bind(this)} message={message}/>
-          <div className="wrap">
+          <div className="wrap perfect-center-child">
            { board }
           </div>
         </div>

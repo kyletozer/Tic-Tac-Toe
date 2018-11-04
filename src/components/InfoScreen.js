@@ -40,7 +40,7 @@ export default class InfoScreen extends Component {
 
         <form id="set-players" onSubmit={startGame.bind(null, this.state)}>
           
-          <div className="form-group">
+          <div className="form-group opponent" style={{ display: 'none'}}>
             <legend>Choose your opponent</legend>
             <label htmlFor="opponent-computer">
               <input id="opponent-computer" type="radio" name="opponent" value="computer" checked={!friend ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'friend')} />
@@ -54,7 +54,7 @@ export default class InfoScreen extends Component {
             </label>
           </div>
 
-          <div className="form-group">
+          <div className="form-group team">
             <legend>Choose your side</legend>
             <label htmlFor="team-x">
               <input id="team-x" type="radio" name="team" value="x" checked={human === 'x' ? 'checked' : ''} onChange={this.setPlayers.bind(this, 'human')} />
@@ -68,7 +68,7 @@ export default class InfoScreen extends Component {
             </label>
           </div>
 
-          <button type="submit">Start Game</button>
+          <button className="button" type="submit">Start Game</button>
         </form>
       </div>
     )

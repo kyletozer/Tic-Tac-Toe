@@ -3,17 +3,17 @@ import React, { Component } from 'react';
 export default class Square extends Component {
 
   render() {
-    let marker = ''
-    const classes = [ 'square' ]
+    const { marker } = this.props
+    const classes = [ 'square', 'perfect-center-parent' ]
+    let icon = marker ? ( marker === 'x' ? 'times' : 'circle' ) : null
 
-    if(this.props.marker) {
-      marker = <span className="marker">{ this.props.marker }</span>
+    if(icon) {
       classes.push('marked')
     }
 
     return (
       <div onClick={this.props.placeMarker} className={ classes.join(' ') }>
-        { marker }
+        { icon && <span className="marker perfect-center-child"><i className={'fas fa-' + icon}></i></span> }
       </div>
     );
   }

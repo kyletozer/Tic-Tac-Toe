@@ -8,14 +8,14 @@ Cypress.Commands.add('startGame', (options = {}) => {
     .get('#set-players')
     .as('form')
   
-  cy
-    .get('@form')
-    .get(`input[value="${player}"]`)
-    .click()
+  // cy
+  //   .get('@form')
+  //   .get(`label[for="opponent-${player}"]`)
+  //   .click()
 
   cy
     .get('@form')
-    .get(`input[value="${side}"]`)
+    .get(`label[for="team-${side}"]`)
 
   cy
     .get('@form')

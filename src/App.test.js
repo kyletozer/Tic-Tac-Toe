@@ -64,10 +64,10 @@ describe('Making moves', () => {
         expect(
           node
             .contains(
-              <span className="marker">x</span>
+              <span className="marker">x</span> // markup has changed
             )
           )
-            .toBe(cond)    
+            .toBe(cond)
     })
   })
 
