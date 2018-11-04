@@ -2,7 +2,7 @@
   "name": "tictactoe",
   "version": "0.1.0",
   "private": false,
-  "homepage" : "http://myname.github.io/myapp",
+  "homepage": "http://kyletozer.github.io/Tic-Tac-Toe/build",
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -14,7 +14,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "e2e": "cypress open",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand"
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -28,6 +29,7 @@
   "devDependencies": {
     "cypress": "^3.1.0",
     "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.6.0"
+    "enzyme-adapter-react-16": "^1.6.0",
+    "gh-pages": "^2.0.1"
   }
 }
