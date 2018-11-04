@@ -61,13 +61,7 @@ describe('Making moves', () => {
         if(index === squareIndex) {
           cond = true
         }
-        expect(
-          node
-            .contains(
-              <span className="marker">x</span> // markup has changed
-            )
-          )
-            .toBe(cond)
+        expect(node.hasClass('marked-x')).toBe(cond)
     })
   })
 
@@ -124,8 +118,8 @@ describe('Computer intelligence as "o"', () => {
 
     instance.placeMarker.call(squares.get(0), 0)
     wrapper.update()
-    
-    expect(shallow(wrapper.find('.wrap').children().get(0)).text()).toBe('x')
-    expect(shallow(wrapper.find('.wrap').children().get(4)).text()).toBe('o')
+
+    expect(shallow(wrapper.find('.wrap').children().get(0)).hasClass('marked-x')).toBe(true)
+    expect(shallow(wrapper.find('.wrap').children().get(4)).hasClass('marked-o')).toBe(true)
   })
 }) 

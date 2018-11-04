@@ -8,7 +8,7 @@ export default class Square extends Component {
     let icon = marker ? ( marker === 'x' ? 'times' : 'circle' ) : null
 
     if(icon) {
-      classes.push('marked')
+      classes.push('marked', `marked-${marker}`)
     }
 
     return (
