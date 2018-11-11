@@ -9,3 +9,6 @@ node_js:
 #   script: yarn deploy
 #   on:
 #     branch: master
+branches:
+  only:
+    - master
